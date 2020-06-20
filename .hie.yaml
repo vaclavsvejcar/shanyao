@@ -1,0 +1,16 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "shanyao:lib"
+
+    - path: "./app/Main.hs"
+      component: "shanyao:exe:shanyao"
+
+    - path: "./app/Paths_shanyao.hs"
+      component: "shanyao:exe:shanyao"
+
+    - path: "./doctest"
+      component: "shanyao:test:doctest"
+
+    - path: "./test"
+      component: "shanyao:test:spec"
