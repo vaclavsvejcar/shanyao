@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import           ShanYao.Pixel                  ( Pixel(..) )
+
 
 main :: IO ()
 main = do
@@ -14,10 +16,13 @@ gradient :: Int -> Int -> [String]
 gradient nx ny = do
   j <- [ny - 1, ny - 2 .. 0]
   i <- [0 .. nx - 1]
-  let r  = (fromIntegral i :: Double) / (fromIntegral nx :: Double)
-      g  = (fromIntegral j :: Double) / (fromIntegral ny :: Double)
-      b  = 0.2 :: Double
-      ir = (floor $ 255.99 * r) :: Int
-      ig = (floor $ 255.99 * g) :: Int
-      ib = (floor $ 255.99 * b) :: Int
-  pure $ show ir <> " " <> show ig <> " " <> show ib
+  let (Pixel r g b) = Pixel (fromIntegral i / fromIntegral nx)
+                            (fromIntegral j / fromIntegral ny)
+                            0.2
+  pure
+    $  (show . toColor $ r)
+    <> " "
+    <> (show . toColor $ g)
+    <> " "
+    <> (show . toColor $ b)
+  where toColor x = (floor $ 255.99 * x) :: Int
