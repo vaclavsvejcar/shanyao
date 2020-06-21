@@ -9,20 +9,20 @@ import           Test.Hspec
 
 spec :: Spec
 spec = do
-  describe "(|+>)" $ do
+  describe "(>+)" $ do
     it "should calculate addition of two vectors" $ do
       let vec1     = Vec3 1 0 3
           vec2     = Vec3 (-1) 4 2
           expected = Vec3 0 4 5
-      vec1 |+> vec2 `shouldBe` expected
+      vec1 >+ vec2 `shouldBe` expected
 
 
-  describe "(|->)" $ do
+  describe "(>-)" $ do
     it "should calculate subtraction of two vectors" $ do
       let vec1     = Vec3 4 2 (-1)
           vec2     = Vec3 (-1) 2 3
           expected = Vec3 5 0 (-4)
-      vec1 |-> vec2 `shouldBe` expected
+      vec1 >- vec2 `shouldBe` expected
 
 
   describe "(><)" $ do
@@ -38,3 +38,10 @@ spec = do
       let vec1 = Vec3 6 (-1) 3
           vec2 = Vec3 4 18 (-2)
       vec1 >.< vec2 `shouldBe` 0
+
+
+  describe "vec3Length" $ do
+    it "calculates length of the vector" $ do
+      let vec      = Vec3 1 2 3
+          expected = sqrt 14
+      vec3Length vec `shouldBe` expected

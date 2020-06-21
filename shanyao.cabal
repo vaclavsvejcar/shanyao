@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 23e957d871a66600def3f0a0eb052e3c654eeabe2e1b5fc9f9c495f3caf372bc
+-- hash: 1d052e01de156392e8904543e45a51471bbd09f819024447aa7ca54c1f9dd370
 
 name:           shanyao
 version:        0.0.1.0
@@ -28,7 +28,8 @@ source-repository head
 library
   exposed-modules:
       Lib
-      ShanYao.Pixel
+      ShanYao.Color3
+      ShanYao.Ray
       ShanYao.Vec3
   other-modules:
       Paths_shanyao
