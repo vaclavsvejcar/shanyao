@@ -1,7 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import qualified Data.ByteString.Lazy          as BS
 import           ShanYao.Color3                 ( Color3(..) )
+import           ShanYao.Image                  ( Image(..) )
+import           ShanYao.Image.PPM              ( PPM(..) )
 import           ShanYao.Ray                    ( Ray(..) )
 import           ShanYao.Vec3                   ( Vec3(..)
                                                 , vec3Unit
@@ -14,13 +17,18 @@ import           ShanYao.Vec3                   ( Vec3(..)
 
 main :: IO ()
 main = do
-  let ratio  = 16 / 9
-      width  = 384
-      height = (floor $ fromIntegral width / ratio) :: Int
-  putStrLn $ "P3\n" <> show width <> " " <> show height <> "\n255"
-  mapM_ putStrLn (gradient ratio width)
+  let
+    ratio  = 16 / 9
+    width  = 384
+    height = (floor $ fromIntegral width / ratio) :: Int
+    image  = PPM { ppmWidth  = width
+                 , ppmHeight = height
+                 , ppmData   = gradient ratio width
+                 }
+  BS.putStr $ renderImage image
 
-gradient :: Double -> Int -> [String]
+
+gradient :: Double -> Int -> [Color3]
 gradient ratio imageWidth = do
   let imageHeight    = (floor $ fromIntegral imageWidth / ratio) :: Int
       viewportHeight = 2
@@ -41,16 +49,8 @@ gradient ratio imageWidth = do
     ray = Ray
       origin
       (lowerLeftCorner >+ (horizontal >* u) >+ (vertical >* v) >- origin)
-    (Color3 (Vec3 r g b)) = rayColor ray
 
-
-  pure
-    $  (show . toColor $ r)
-    <> " "
-    <> (show . toColor $ g)
-    <> " "
-    <> (show . toColor $ b)
-  where toColor x = (floor $ 255.99 * x) :: Int
+  pure $ rayColor ray
 
 
 rayColor :: Ray -> Color3

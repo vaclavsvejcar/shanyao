@@ -35,6 +35,9 @@ ghc-options:
 
 library:
   source-dirs: src
+  dependencies:
+    - binary
+    - bytestring
 
 executables:
   shanyao:
@@ -45,6 +48,7 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
+      - bytestring
       - shanyao
 
 tests:
@@ -56,6 +60,7 @@ tests:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
+      - bytestring
       - hspec
       - shanyao
 
